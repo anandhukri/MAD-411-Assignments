@@ -3,6 +3,7 @@ package com.example.assignment7
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -20,13 +21,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        nameEdit = findViewById(R.id.nameEdit)
-        result = findViewById(R.id.result)
+        var nameEdit = findViewById<TextView>(R.id.nameBox)
+        var result = findViewById<TextView>(R.id.showResult)
+        var button = findViewById<Button>(R.id.submitButton)
+
+        button.setOnClickListener {
+            result.text = "Hello, ${nameEdit.text}!"
+
+        }
 
     }
 
-    fun display(view: View){
-        val name = nameEdit.text.toString()
-        result.text = "Hello $name!"
-    }
+
 }
