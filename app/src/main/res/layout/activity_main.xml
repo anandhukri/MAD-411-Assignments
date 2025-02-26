@@ -8,8 +8,6 @@
     tools:context=".MainActivity">
 
 
-
-
     <EditText
         android:id="@+id/nameEdit"
         android:layout_width="408dp"
