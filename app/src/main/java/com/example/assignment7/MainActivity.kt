@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var editTextAmount: EditText
     lateinit var buttonAddExpense: Button
     lateinit var recyclerViewExpenses: RecyclerView
-    lateinit var textViewDate: TextView  // Added TextView for Date
+    lateinit var textViewDate: TextView
 
     private val expenseList = mutableListOf<Expense>()
     private lateinit var expenseAdapter: ExpenseAdapter
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         editTextAmount = findViewById(R.id.editTextAmount)
         buttonAddExpense = findViewById(R.id.buttonAddExpense)
         recyclerViewExpenses = findViewById(R.id.recyclerViewExpenses)
-        textViewDate = findViewById(R.id.textViewDate)  // Initialize TextView
+        textViewDate = findViewById(R.id.textViewDate)
 
         expenseAdapter = ExpenseAdapter(expenseList) { position -> deleteExpense(position) }
 
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         buttonAddExpense.setOnClickListener { addExpense() }
 
-        textViewDate.setOnClickListener { showDatePicker() }  // Set DatePickerDialog
+        textViewDate.setOnClickListener { showDatePicker() }
     }
 
     private fun showDatePicker() {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
             val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-            textViewDate.text = selectedDate  // Display selected date in TextView
+            textViewDate.text = selectedDate
         }, year, month, day)
 
         datePickerDialog.show()
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val date = textViewDate.text.toString().trim()
 
         if (name.isNotEmpty() && amount.isNotEmpty() && isValidAmount(amount)) {
-            expenseList.add(Expense(name, amount, date))  // Pass date along with name and amount
+            expenseList.add(Expense(name, amount, date))
             expenseAdapter.notifyItemInserted(expenseList.size - 1)
             editTextExpenseName.text.clear()
             editTextAmount.text.clear()

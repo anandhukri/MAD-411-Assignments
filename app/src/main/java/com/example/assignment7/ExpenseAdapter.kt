@@ -13,9 +13,9 @@ class ExpenseAdapter(
 ) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
 
     class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textName: TextView = itemView.findViewById(R.id.textExpenseName)
-        val textAmount: TextView = itemView.findViewById(R.id.textExpenseAmount)
-        val textDate: TextView = itemView.findViewById(R.id.textExpenseDate)  // Show date in item
+        val textName: TextView = itemView.findViewById(R.id.textViewExpenseName)
+        val textAmount: TextView = itemView.findViewById(R.id.textViewAmount)
+        val textDate: TextView = itemView.findViewById(R.id.textViewDate)
         val buttonDelete: Button = itemView.findViewById(R.id.buttonDelete)
     }
 
@@ -28,7 +28,7 @@ class ExpenseAdapter(
         val expense = expenses[position]
         holder.textName.text = expense.name
         holder.textAmount.text = expense.amount
-        holder.textDate.text = expense.date  // Display the date
+        holder.textDate.text = expense.date
         holder.buttonDelete.setOnClickListener { onDeleteClick(position) }
     }
 

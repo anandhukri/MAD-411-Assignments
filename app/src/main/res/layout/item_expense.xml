@@ -6,65 +6,53 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <!-- Expense Name -->
     <TextView
-        android:id="@+id/textExpenseName"
+        android:id="@+id/textViewExpenseName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Expense Name"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:maxLines="1"
-        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textViewAmount"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textExpenseAmount"
-        app:layout_constraintHorizontal_bias="0.2" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
-    <!-- Expense Amount -->
     <TextView
-        android:id="@+id/textExpenseAmount"
+        android:id="@+id/textViewAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:maxLines="1"
         android:text="Amount"
         android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintStart_toEndOf="@id/textViewExpenseName"
+        app:layout_constraintEnd_toStartOf="@id/textViewDate"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/textExpenseDate"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/textExpenseName"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
-    <!-- Expense Date -->
     <TextView
-        android:id="@+id/textExpenseDate"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewDate"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintStart_toEndOf="@id/textExpenseAmount"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/textViewAmount"
         app:layout_constraintEnd_toStartOf="@id/buttonDelete"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.7" />
+        />
 
-    <!-- Delete Button -->
     <Button
         android:id="@+id/buttonDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
         android:backgroundTint="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
