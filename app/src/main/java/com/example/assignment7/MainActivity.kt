@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var editTextAmount: EditText
     lateinit var buttonAddExpense: Button
     lateinit var recyclerViewExpenses: RecyclerView
+
     lateinit var textViewDate: TextView
 
     private val expenseList = mutableListOf<Expense>()
