@@ -13,24 +13,22 @@
         android:text="Expense Name"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/textViewAmount"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toStartOf="@id/textViewAmount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Amount"
-        android:textSize="16sp"
         android:textColor="@android:color/darker_gray"
-        app:layout_constraintStart_toEndOf="@id/textViewExpenseName"
-        app:layout_constraintEnd_toStartOf="@id/textViewDate"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toStartOf="@id/textViewDate"
+        app:layout_constraintStart_toEndOf="@id/textViewExpenseName"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewDate"
@@ -38,21 +36,30 @@
         android:layout_height="wrap_content"
         android:text="Date"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/textViewAmount"
-        app:layout_constraintEnd_toStartOf="@id/buttonDelete"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toStartOf="@id/buttonDelete"
+        app:layout_constraintStart_toEndOf="@id/textViewAmount"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
         android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Delete"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/detailsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Show Details"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="124dp"
+        tools:layout_editor_absoluteY="105dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
