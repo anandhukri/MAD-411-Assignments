@@ -1,5 +1,6 @@
 package com.example.assignment7
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class ExpenseAdapter(
         val textAmount: TextView = itemView.findViewById(R.id.textViewAmount)
         val textDate: TextView = itemView.findViewById(R.id.textViewDate)
         val buttonDelete: Button = itemView.findViewById(R.id.buttonDelete)
+        val buttonDetails: Button = itemView.findViewById(R.id.buttonDetails)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
@@ -30,6 +32,16 @@ class ExpenseAdapter(
         holder.textAmount.text = expense.amount
         holder.textDate.text = expense.date
         holder.buttonDelete.setOnClickListener { onDeleteClick(position) }
+
+        holder.buttonDetails.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, ExpenseDetailsActivity::class.java).apply {
+                putExtra("expenseName", expense.name)
+                putExtra("expenseAmount", expense.amount)
+                putExtra("expenseDate", expense.date)
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = expenses.size

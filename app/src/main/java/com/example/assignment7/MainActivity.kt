@@ -1,6 +1,8 @@
 package com.example.assignment7
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -39,6 +41,14 @@ class MainActivity : AppCompatActivity() {
         buttonAddExpense.setOnClickListener { addExpense() }
 
         textViewDate.setOnClickListener { showDatePicker() }
+
+        val tipButton = findViewById<Button>(R.id.financeButton)
+
+        tipButton.setOnClickListener {
+            val url = "https://www.investopedia.com/articles/younginvestors/08/eight-tips.asp"
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(browserIntent)
+        }
     }
 
     override fun onStart() {

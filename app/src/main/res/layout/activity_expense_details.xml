@@ -8,7 +8,7 @@
     tools:context=".ExpenseDetailsActivity">
 
     <TextView
-        android:id="@+id/expenseNameTextView"
+        android:id="@+id/exName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Expense Name"
@@ -20,13 +20,24 @@
 
 
     <TextView
-        android:id="@+id/expenseAmountTextView"
+        android:id="@+id/exAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amount"
+        android:text="Expense Amount"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expenseNameTextView"
+        app:layout_constraintTop_toBottomOf="@id/exName"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/exDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expense Date"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exAmount"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
 

@@ -1,20 +1,28 @@
 package com.example.assignment7
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class ExpenseDetailsActivity : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_expense_details)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        val name = intent.getStringExtra("name")
+        val amount = intent.getStringExtra("amount")
+        val date = intent.getStringExtra("date")
+
+        val nameTextView = findViewById<TextView>(R.id.exName)
+        val amountTextView = findViewById<TextView>(R.id.exAmount)
+        val dateView = findViewById<TextView>(R.id.exDate)
+
+        nameTextView.text = "Expense Name: $name"
+        amountTextView.text = "Expense Amount $amount"
+        dateView.text = "Expense Date: $date"
     }
 }
