@@ -2,6 +2,7 @@ package com.example.assignment7
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +39,31 @@ class MainActivity : AppCompatActivity() {
         buttonAddExpense.setOnClickListener { addExpense() }
 
         textViewDate.setOnClickListener { showDatePicker() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("ActivityLifecycle", "onStart called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("ActivityLifecycle", "onResume called")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ActivityLifecycle", "onPause called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ActivityLifecycle", "onStop called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("ActivityLifecycle", "onDestroy called")
     }
 
     private fun showDatePicker() {
