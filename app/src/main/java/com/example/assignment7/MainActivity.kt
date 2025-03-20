@@ -20,12 +20,22 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var textViewDate: TextView
 
+    private lateinit var footerFragment: FooterFragment
     private val expenseList = mutableListOf<Expense>()
     private lateinit var expenseAdapter: ExpenseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.header_container, HeaderFragment())
+            .commit()
+
+        footerFragment = FooterFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.footer_container, footerFragment)
+            .commit()
 
         editTextExpenseName = findViewById(R.id.editTextName)
         editTextAmount = findViewById(R.id.editTextAmount)
@@ -98,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         if (name.isNotEmpty() && amount.isNotEmpty() && isValidAmount(amount)) {
             expenseList.add(Expense(name, amount, date))
             expenseAdapter.notifyItemInserted(expenseList.size - 1)
+            updateTotalExpense()
             editTextExpenseName.text.clear()
             editTextAmount.text.clear()
 
@@ -109,6 +120,12 @@ class MainActivity : AppCompatActivity() {
     private fun deleteExpense(position: Int) {
         expenseList.removeAt(position)
         expenseAdapter.notifyItemRemoved(position)
+        updateTotalExpense()
+    }
+
+    private fun updateTotalExpense() {
+        val total = expenseList.sumOf { it.amount.toDouble() }
+        footerFragment.updateTotalAmount(total)
     }
 
     private fun isValidAmount(amount: String): Boolean {

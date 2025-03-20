@@ -13,9 +13,9 @@ class ExpenseDetailsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_expense_details)
 
-        val name = intent.getStringExtra("name")
-        val amount = intent.getStringExtra("amount")
-        val date = intent.getStringExtra("date")
+        val name = intent.getStringExtra("expenseName")
+        val amount = intent.getStringExtra("expenseAmount")
+        val date = intent.getStringExtra("expenseDate")
 
         val nameTextView = findViewById<TextView>(R.id.exName)
         val amountTextView = findViewById<TextView>(R.id.exAmount)
