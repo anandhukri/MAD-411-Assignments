@@ -21,7 +21,6 @@ class FooterFragment : Fragment() {
     private lateinit var textViewTotal: TextView
     private var totalAmount: Double = 0.0
 
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -39,7 +38,7 @@ class FooterFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_footer, container, false)
         textViewTotal = view.findViewById(R.id.textViewTotalAmount)
-        updateTotalAmount(totalAmount) // Initialize with 0
+        updateTotalAmount(totalAmount)
         return view
     }
 
