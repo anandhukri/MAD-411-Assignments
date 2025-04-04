@@ -10,8 +10,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
@@ -107,17 +105,12 @@ class MainActivity : AppCompatActivity() {
         val amount = editTextAmount.text.toString().trim()
         val date = textViewDate.text.toString().trim()
 
-        loadToFile()
-
         if (name.isNotEmpty() && amount.isNotEmpty() && isValidAmount(amount)) {
             expenseList.add(Expense(name, amount, date))
             expenseAdapter.notifyItemInserted(expenseList.size - 1)
             updateTotalExpense()
-
-            saveToFile(expenseList)
             editTextExpenseName.text.clear()
             editTextAmount.text.clear()
-
 
         } else {
             Toast.makeText(this, "Please enter valid name and amount", Toast.LENGTH_SHORT).show()
@@ -138,36 +131,4 @@ class MainActivity : AppCompatActivity() {
     private fun isValidAmount(amount: String): Boolean {
         return amount.toDoubleOrNull() != null && amount.toDouble() > 0
     }
-
-
-    private fun saveToFile(expenses: List<Expense>){
-        val gson = Gson()
-        val json = gson.toJson(expenses)
-
-        try {
-            openFileOutput("expenses.json", MODE_PRIVATE).use { output ->
-                output.write(json.toByteArray())
-            }
-        }catch (e:Exception){
-            Log.e("Main Activity","Error saving expenses",e)
-        }
-    }
-
-    private fun loadToFile():List<Expense>{
-        val expenses = mutableListOf<Expense>()
-        try {
-            openFileInput("expenses.json").use { input ->
-                val json = input.bufferedReader().readText()
-                val gson = Gson()
-                val expenseListType = object : TypeToken<List<Expense>>() {}.type
-                expenses.addAll(gson.fromJson(json,expenseListType))
-
-            }
-        }catch (e:Exception){
-            Log.e("MainActivity","Error reading expenses",e)
-        }
-        return expenses
-    }
-
-
 }

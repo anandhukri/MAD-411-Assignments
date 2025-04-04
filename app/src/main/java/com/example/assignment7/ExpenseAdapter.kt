@@ -1,11 +1,13 @@
 package com.example.assignment7
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 class ExpenseAdapter(
@@ -34,13 +36,13 @@ class ExpenseAdapter(
         holder.buttonDelete.setOnClickListener { onDeleteClick(position) }
 
         holder.buttonDetails.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, ExpenseDetailsActivity::class.java).apply {
-                putExtra("expenseName", expense.name)
-                putExtra("expenseAmount", expense.amount)
-                putExtra("expenseDate", expense.date)
-            }
-            context.startActivity(intent)
+            val bundle = Bundle()
+            bundle.putString("expenseName", expense.name)
+            bundle.putString("expenseAmount", expense.amount)
+            bundle.putString("expenseDate", expense.date)
+
+            val navController = holder.itemView.findNavController()
+            navController.navigate(R.id.action_expenseListFragment_to_expenseDetailsFragment, bundle)
         }
     }
 
