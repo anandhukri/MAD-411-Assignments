@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Calendar
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var editTextExpenseName: EditText
     lateinit var editTextAmount: EditText
