@@ -1,3 +1,6 @@
-package com.example.assignment7
-
-data class Expense(val name: String, val amount: String, val date: String)
+data class Expense(
+    val name: String,
+    val amount: Double,
+    val date: String,
+    val currency: Currency,
+    var convertedCost: Double )

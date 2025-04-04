@@ -1,27 +1,11 @@
-package com.example.assignment7
-
-import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.assignment7.R
 
-class ExpenseAdapter(
-    private val expenses: MutableList<Expense>,
-    private val onDeleteClick: (Int) -> Unit
-) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
-
-    class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textName: TextView = itemView.findViewById(R.id.textViewExpenseName)
-        val textAmount: TextView = itemView.findViewById(R.id.textViewAmount)
-        val textDate: TextView = itemView.findViewById(R.id.textViewDate)
-        val buttonDelete: Button = itemView.findViewById(R.id.buttonDelete)
-        val buttonDetails: Button = itemView.findViewById(R.id.buttonDetails)
-    }
+class ExpenseAdapter(private val expenses: List<Expense>) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_expense, parent, false)
@@ -30,21 +14,18 @@ class ExpenseAdapter(
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
         val expense = expenses[position]
-        holder.textName.text = expense.name
-        holder.textAmount.text = expense.amount
-        holder.textDate.text = expense.date
-        holder.buttonDelete.setOnClickListener { onDeleteClick(position) }
-
-        holder.buttonDetails.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("expenseName", expense.name)
-            bundle.putString("expenseAmount", expense.amount)
-            bundle.putString("expenseDate", expense.date)
-
-            val navController = holder.itemView.findNavController()
-            navController.navigate(R.id.action_expenseListFragment_to_expenseDetailsFragment, bundle)
-        }
+        holder.bind(expense)
     }
 
     override fun getItemCount(): Int = expenses.size
+
+    inner class ExpenseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val nameTextView: TextView = view.findViewById(R.id.textViewExpenseName)
+        private val amountTextView: TextView = view.findViewById(R.id.textViewExpenseAmount)
+
+        fun bind(expense: Expense) {
+            nameTextView.text = expense.name
+            amountTextView.text = expense.amount.toString()
+        }
+    }
 }

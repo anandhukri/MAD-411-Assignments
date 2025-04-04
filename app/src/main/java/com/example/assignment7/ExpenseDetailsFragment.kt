@@ -1,26 +1,26 @@
-package com.example.assignment7
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.assignment7.QuoteApiService
+import com.example.assignment7.R
+import com.example.assignment7.RetrofitInstance
 
 class ExpenseDetailsFragment : Fragment() {
 
-    private var expenseName: String? = null
-    private var expenseAmount: String? = null
-    private var expenseDate: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            expenseName = it.getString("expenseName")
-            expenseAmount = it.getString("expenseAmount")
-            expenseDate = it.getString("expenseDate")
-        }
-    }
+    private lateinit var checkboxConversionNeeded: CheckBox
+    private lateinit var spinnerCurrency: Spinner
+    private lateinit var textViewConvertedCost: TextView
+    private lateinit var expense: Expense
+    private lateinit var QuoteApiService: QuoteApiService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,24 +32,46 @@ class ExpenseDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val nameTextView = view.findViewById<TextView>(R.id.exName)
-        val amountTextView = view.findViewById<TextView>(R.id.exAmount)
-        val dateView = view.findViewById<TextView>(R.id.exDate)
+        checkboxConversionNeeded = view.findViewById(R.id.checkboxConversionNeeded)
+        spinnerCurrency = view.findViewById(R.id.spinnerCurrency)
+        textViewConvertedCost = view.findViewById(R.id.textViewConvertedCost)
 
-        nameTextView.text = "Expense Name: $expenseName"
-        amountTextView.text = "Expense Amount: $expenseAmount"
-        dateView.text = "Expense Date: $expenseDate"
-    }
+        val currencies = listOf("CAD", "EUR", "ISK")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, currencies)
+        spinnerCurrency.adapter = adapter
 
-    companion object {
-        @JvmStatic
-        fun newInstance(name: String, amount: String, date: String) =
-            ExpenseDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString("expenseName", name)
-                    putString("expenseAmount", amount)
-                    putString("expenseDate", date)
+        QuoteApiService = RetrofitInstance.QuoteApiService
+        checkboxConversionNeeded.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                fetchExchangeRates()
+            } else {
+                textViewConvertedCost.text = "Converted Cost: $0.00"
+            }
+        }
+
+        spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (checkboxConversionNeeded.isChecked) {
+                    fetchExchangeRates()
                 }
             }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun fetchExchangeRates() {
+        lifecycleScope.launch {
+            try {
+                val response = QuoteApiService.getExchangeRates("CAD")
+                val selectedCurrencyCode = spinnerCurrency.selectedItem.toString()
+                val exchangeRate = response.rates[selectedCurrencyCode] ?: 1.0
+                val convertedCost = expense.amount * exchangeRate
+                expense.convertedCost = convertedCost
+                textViewConvertedCost.text = "Converted Cost: ${expense.currency.symbol}${"%.2f".format(convertedCost)}"
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Failed to fetch exchange rate", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

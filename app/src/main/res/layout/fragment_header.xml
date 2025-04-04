@@ -5,14 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".HeaderFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/headerText"
-        android:layout_width="420dp"
-        android:layout_height="54dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="#426D22"
-        android:gravity="center"
         android:text="Expense Tracker"
         android:textColor="@android:color/white"
         android:textSize="48sp"
