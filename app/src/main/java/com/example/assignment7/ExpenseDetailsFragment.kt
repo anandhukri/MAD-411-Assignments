@@ -2,35 +2,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.assignment7.QuoteApiService
 import com.example.assignment7.R
 import com.example.assignment7.RetrofitInstance
+import kotlinx.coroutines.launch
 
 class ExpenseDetailsFragment : Fragment() {
-
 
     private lateinit var checkboxConversionNeeded: CheckBox
     private lateinit var spinnerCurrency: Spinner
     private lateinit var textViewConvertedCost: TextView
     private lateinit var expense: Expense
-    private lateinit var QuoteApiService: QuoteApiService
+    private lateinit var quoteApiService: QuoteApiService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_expense_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        expense = Expense(amount = 100.0, currency = Currency("CAD", "$"), convertedCost = 0.0)
 
         checkboxConversionNeeded = view.findViewById(R.id.checkboxConversionNeeded)
         spinnerCurrency = view.findViewById(R.id.spinnerCurrency)
@@ -38,9 +36,11 @@ class ExpenseDetailsFragment : Fragment() {
 
         val currencies = listOf("CAD", "EUR", "ISK")
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, currencies)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCurrency.adapter = adapter
 
-        QuoteApiService = RetrofitInstance.QuoteApiService
+        quoteApiService = RetrofitInstance.api
+
         checkboxConversionNeeded.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 fetchExchangeRates()
@@ -50,21 +50,21 @@ class ExpenseDetailsFragment : Fragment() {
         }
 
         spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (checkboxConversionNeeded.isChecked) {
                     fetchExchangeRates()
                 }
             }
 
-            override fun onNothingSelected(parentView: AdapterView<*>?) {}
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
     private fun fetchExchangeRates() {
         lifecycleScope.launch {
             try {
-                val response = QuoteApiService.getExchangeRates("CAD")
                 val selectedCurrencyCode = spinnerCurrency.selectedItem.toString()
+                val response = quoteApiService.getExchangeRates("CAD")
                 val exchangeRate = response.rates[selectedCurrencyCode] ?: 1.0
                 val convertedCost = expense.amount * exchangeRate
                 expense.convertedCost = convertedCost
